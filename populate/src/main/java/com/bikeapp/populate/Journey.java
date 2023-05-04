@@ -17,7 +17,7 @@ public class Journey {
 	private String departureStation;
 	private Integer returnStationId;
 	private String returnStation;
-	private Integer distance;
+	private Double distance;
 	private Integer duration;
 	
 	public Integer getId() {
@@ -62,10 +62,10 @@ public class Journey {
 	public void setReturnStation(String returnStation) {
 		this.returnStation = returnStation;
 	}
-	public Integer getDistance() {
+	public Double getDistance() {
 		return distance;
 	}
-	public void setDistance(Integer distance) {
+	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
 	public Integer getDuration() {
