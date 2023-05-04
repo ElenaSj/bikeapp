@@ -11,7 +11,7 @@ public class PopulateApplication {
 	@Bean
     public CommandLineRunner springStart(Populate populate){
         return args -> {
-            System.out.println("Sovellus on käynnistynyt");
+            System.out.println("The application has started");
             populate.init();
         };
     }
