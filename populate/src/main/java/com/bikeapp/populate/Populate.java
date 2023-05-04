@@ -161,9 +161,5 @@ public class Populate {
 		System.out.println("Ready to roll! All data fetched");
 		
 	}
-	
-	
-	
-	
 
 }
