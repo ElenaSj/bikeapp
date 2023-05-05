@@ -1,13 +1,25 @@
 import React from 'react';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
+import axios from 'axios'
 import 'leaflet/dist/leaflet.css';
 
 
 
 const StationDetail = props => {
-    const station=props.station
-    const position=[station.latitude, station.longitude]
+    const id = props.id
+    const [station, getStation] = useState({})
+    const [position, getPosition] = useState([])
+    
+    useEffect(() => {
+        axios.get('/api/stations/'+id)
+            .then(response => {
+                getStation(response.data)
+                getPosition([response.data.latitude, response.data.longitude])
+            })
+    })
+
+    //const position=[station.latitude, station.longitude]
 
     const ChangeMapView = () => {
         const map = useMap()

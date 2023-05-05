@@ -5,7 +5,7 @@ import axios from 'axios'
 import './stations.css'
 
 const Stations = ({ stations, select }) => {
-    let stationrows = stations.map(s => <li className="list-group-item" onClick={() => select(s)}>{s.nameFi}</li> )
+    let stationrows = stations.map(s => <li className="list-group-item" onClick={() => select(s.id)}>{s.nameFi}</li> )
     return (
         <>
             <ul className="list-group">
@@ -26,7 +26,7 @@ const StationList = ({stations, select }) => {
 
 const StationContainer = () => {
     const [stations, getStations] = useState([])
-    const [selectedStation, selectStation] = useState({id: 0})
+    const [selectedId, selectStation] = useState(0)
 
     useEffect(() => {
         axios.get('/api/stations')
@@ -35,7 +35,7 @@ const StationContainer = () => {
 
     return <div className="row">
         <StationList stations={ stations } select={ selectStation }/>
-        <StationDetail station={ selectedStation }/>
+        <StationDetail id={ selectedId }/>
     </div>
 }
 
