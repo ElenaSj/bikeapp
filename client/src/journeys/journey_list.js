@@ -5,7 +5,7 @@ import './journey_list.css'
 const Journeys = ({ journeys }) => {
     let journeyrows = journeys.map(j => {
         return (
-        <tr>
+        <tr key={j.id}>
             <td>{j.departureStation}</td>
             <td>{j.returnStation}</td>
             <td>{j.duration}</td>

@@ -2,3 +2,13 @@
     max-height: 50%;
     overflow-y: scroll;
 }
+
+.map {
+    height: 75vh;
+    overflow: hidden;
+}
+
+#paginationbutton {
+    margin-top: 10px;
+ 
+}
