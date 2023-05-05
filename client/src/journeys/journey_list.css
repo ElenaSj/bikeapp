@@ -1,0 +1,15 @@
+.journeys {
+    padding-top: 20px;
+}
+
+.journeytable {
+    height: 50%;
+    overflow: auto;
+}
+
+.journeytable thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: white;
+}
