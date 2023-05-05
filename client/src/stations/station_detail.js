@@ -1,12 +1,16 @@
 import React from 'react';
 
-const StationDetail = () => {
+const StationDetail = props => {
+    const station=props.station
     
-
+console.log("station id",station.id)
     return (
         <div className="col">
-            <h2>Detailed info for selected station</h2>
+        {!station.id && <p>Please select a station from the list to view detailed info</p>}
 
+        {!!station.id &&
+            <h2>{station.nameFi}</h2>
+        }
         </div>
     )
 
