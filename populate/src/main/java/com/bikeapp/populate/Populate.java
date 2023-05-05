@@ -128,7 +128,7 @@ public class Populate {
 	}
 	
 	public void saveStation(String stationLine) {
-		var parts = stationLine.split(",");
+		var parts = stationLine.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 		Integer id = 0;
 		Integer stationId = 0;
 		Integer capacity = 0;
@@ -143,7 +143,7 @@ public class Populate {
 			return;
 		}
 		
-		Station s = new Station(id,stationId,parts[2],parts[3],parts[4],parts[5],parts[6],parts[7],parts[8],parts[9],capacity,parts[11],parts[12]);
+		Station s = new Station(id,stationId,sanitize(parts[2]),sanitize(parts[3]),sanitize(parts[4]),sanitize(parts[5]),sanitize(parts[6]),parts[7],parts[8],parts[9],capacity,parts[11],parts[12]);
 		srepo.saveAndFlush(s);
 	}
 	
