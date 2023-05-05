@@ -98,8 +98,8 @@ public class Populate {
 			returnStationId = Integer.valueOf(parts[4]);
 
 		} catch (NumberFormatException ex) {
-			System.out.println("Skipped line "+journeyLine+": failed to parse integer");
-			System.out.println(ex.getMessage());
+			System.out.println("Skipped line "+journeyLine);
+			System.out.println("failed to parse integer "+ex.getMessage());
 			return;
 		}
 		
@@ -109,8 +109,8 @@ public class Populate {
 			departureTime = LocalDateTime.parse(parts[0]);
 			returnTime = LocalDateTime.parse(parts[1]);
 		}catch (DateTimeParseException ex){
-			System.out.println("Skipped line "+journeyLine+": failed to parse date/time");
-			System.out.println(ex.getMessage());
+			System.out.println("Skipped line "+journeyLine);
+			System.out.println("failed to parse date/time "+ex.getMessage());
 			return;
 		}
 		
@@ -138,8 +138,8 @@ public class Populate {
 			stationId = Integer.valueOf(parts[1]);
 			capacity = Integer.valueOf(parts[10]);
 		} catch (NumberFormatException ex) {
-			System.out.println("Skipped line "+stationLine+": failed to parse integer");
-			System.out.println(ex.getMessage());
+			System.out.println("Skipped line "+stationLine);
+			System.out.println("failed to parse integer "+ex.getMessage());
 			return;
 		}
 		
@@ -165,7 +165,7 @@ public class Populate {
 	public void init() throws IOException {
 		Connection con=getConnection();
         if (con==null){
-            System.out.println("Could not connect to database");
+            System.out.println("Error: Could not connect to database");
             return;
         }
         dropCreate(con, "journey", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
