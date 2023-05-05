@@ -1,3 +1,4 @@
-.map {
-    height: 180px;
+.list-group {
+    max-height: 50%;
+    overflow-y: scroll;
 }

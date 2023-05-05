@@ -17,7 +17,7 @@ const StationDetail = props => {
                 getStation(response.data)
                 getPosition([response.data.latitude, response.data.longitude])
             })
-    })
+        },[id])
 
     const ChangeMapView = () => {
         const map = useMap()
