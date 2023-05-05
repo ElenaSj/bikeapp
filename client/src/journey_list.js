@@ -2,8 +2,34 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Journeys = ({ journeys }) => {
-    let journeyrows = journeys.map(j => <p key={j.id}>From {j.departureStation} to {j.returnStation} Duration {j.duration} Distance {j.distance}</p>)
-    return journeyrows
+    let journeyrows = journeys.map(j => {
+        return (
+        <tr>
+            <td>{j.departureStation}</td>
+            <td>{j.returnStation}</td>
+            <td>{j.duration}</td>
+            <td>{j.distance}</td>
+        </tr>
+        )
+    })
+    
+    return (
+        <>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">From (station name)</th>
+                        <th scope="col">To (station name)</th>
+                        <th scope="col">Duration (minutes)</th>
+                        <th scope="col">Distance (kilometers)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { journeyrows }
+                </tbody>
+            </table>
+        </>
+    )
 }
 
 const JourneyList = () => {
@@ -12,11 +38,11 @@ const JourneyList = () => {
     useEffect(() => {
         axios.get('/api/journeys')
             .then(response => getJourneys(response.data))
-    })
+    },[])
 
     return (
         <div>
-            <h2>Pyörämatkat</h2>
+            <h2>Bike journeys</h2>
             <Journeys journeys={journeys} />
         </div>
     )
