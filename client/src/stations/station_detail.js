@@ -19,22 +19,22 @@ const StationDetail = props => {
             })
     })
 
-    //const position=[station.latitude, station.longitude]
-
     const ChangeMapView = () => {
         const map = useMap()
         useEffect(() => {
             map.flyTo(position)
         })
     }
-    
+   
     return (
         <div className="col">
         {!station.id && <p>Please select a station from the list to view detailed info</p>}
 
         {!!station.id && <div>
-            <h2>{station.nameFi}</h2>
+            <h2>Station: {station.nameFi}</h2>
             <p>Address: {station.addressFi}</p>
+            <p>Number of journeys from this station: {station.journeysFrom}</p>
+            <p>Number of journeys to this station: {station.journeysTo}</p>
           
             <MapContainer style={{ height: '100vh', width: '100wh' }} center={position} zoom={13} scrollWheelZoom={true}>
             <TileLayer
