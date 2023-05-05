@@ -1,12 +1,14 @@
 package com.bikeapp.server.Entities;
 
+import org.hibernate.annotations.Formula;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="bikestation")
-public class Station {
+public class StationWithJourneys {
 	@Id
 	private Integer id;
 	private Integer stationId;
@@ -21,29 +23,25 @@ public class Station {
 	private Integer capacity;
 	private String longitude;
 	private String latitude;
-
-	public Station() {
-		
+	@Formula("(SELECT COUNT(*) FROM journey j WHERE j.departure_station_id = id)")
+	private Long journeysFrom;
+	@Formula("(SELECT COUNT(*) FROM journey j WHERE j.return_station_id = id)")
+	private Long journeysTo;
+	
+	public Long getJourneysTo() {
+		return journeysTo;
 	}
 
-	public Station(Integer id, Integer stationId, String nameFi,
-			String nameSwe, String nameEng, String addressFi,
-			String addressSwe, String cityFi, String citySwe, 
-			String operator, Integer capacity,
-			String longitude, String latitude) {
-		this.id=id;
-		this.stationId=stationId;
-		this.nameFi=nameFi;
-		this.nameSwe=nameSwe;
-		this.nameEng=nameEng;
-		this.addressFi=addressFi;
-		this.addressSwe=addressSwe;
-		this.cityFi=cityFi;
-		this.citySwe=citySwe;
-		this.operator=operator;
-		this.capacity=capacity;
-		this.longitude=longitude;
-		this.latitude=latitude;
+	public void setJourneysTo(Long journeysTo) {
+		this.journeysTo = journeysTo;
+	}
+
+	public Long getJourneysFrom() {
+		return journeysFrom;
+	}
+
+	public void setJourneysFrom(Long journeysFrom) {
+		this.journeysFrom = journeysFrom;
 	}
 	
 	public String getCityFi() {
