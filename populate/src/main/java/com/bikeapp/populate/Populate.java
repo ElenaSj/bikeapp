@@ -26,7 +26,9 @@ public class Populate {
     String psw;
 
 	@Autowired
-	JourneyRepository repo;
+	JourneyRepository jrepo;
+	@Autowired
+	StationRepository srepo;
 	
 	public Connection getConnection(){
         try{
@@ -59,12 +61,17 @@ public class Populate {
         }
     }
 	
-	public void readJourneyFile(String file) throws IOException {
+	public void readFile(String file, String type) throws IOException {
 		try {
 			System.out.println("Starting to read data from "+file);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 			String headers = reader.readLine();
-			reader.lines().forEach(line -> saveJourney(line));
+			if (type.equals("journey")) {
+				reader.lines().forEach(line -> saveJourney(line));
+			}
+			if (type.equals("station")) {
+				reader.lines().forEach(line -> saveStation(line));
+			}
 			System.out.println("Finished reading data from "+file);
 			close(reader);
 		} catch (FileNotFoundException e) {
@@ -115,9 +122,29 @@ public class Populate {
 		j.setDepartureStation(departureStation);
 		j.setReturnStationId(returnStationId);
 		j.setReturnStation(returnStation);
-		j.setDistance(distance);
-		j.setDuration(duration);
-		repo.saveAndFlush(j);
+		j.setDistance(distance/1000);
+		j.setDuration(duration/60);
+		jrepo.saveAndFlush(j);
+	}
+	
+	public void saveStation(String stationLine) {
+		var parts = stationLine.split(",");
+		Integer id = 0;
+		Integer stationId = 0;
+		Integer capacity = 0;
+
+		try {
+			id = Integer.valueOf(parts[0]);
+			stationId = Integer.valueOf(parts[1]);
+			capacity = Integer.valueOf(parts[10]);
+		} catch (NumberFormatException ex) {
+			System.out.println("Skipped line "+stationLine+": failed to parse integer");
+			System.out.println(ex.getMessage());
+			return;
+		}
+		
+		Station s = new Station(id,stationId,parts[2],parts[3],parts[4],parts[5],parts[6],parts[7],parts[8],parts[9],capacity,parts[11],parts[12]);
+		srepo.saveAndFlush(s);
 	}
 	
 	public String sanitize (String station) {
@@ -157,7 +184,8 @@ public class Populate {
             ex.printStackTrace();
         }
     
-		readJourneyFile("C:\\2021-05.csv");
+		readFile("C:\\2021-05.csv", "journey");
+		readFile("C:\\Helsingin_ja_Espoon_kaupunkipy%C3%B6r%C3%A4asemat_avoin.csv", "station");
 		System.out.println("Ready to roll! All data fetched");
 		
 	}
