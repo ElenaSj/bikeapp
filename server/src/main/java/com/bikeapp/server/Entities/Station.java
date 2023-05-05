@@ -1,7 +1,12 @@
 package com.bikeapp.server.Entities;
 
+import java.util.List;
+
+import org.hibernate.annotations.Formula;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +26,31 @@ public class Station {
 	private Integer capacity;
 	private String longitude;
 	private String latitude;
+	@Formula("(SELECT COUNT(*) FROM journey j WHERE j.departure_station_id = id)")
+	private Long journeysFrom;
+	@Formula("(SELECT COUNT(*) FROM journey j WHERE j.return_station_id = id)")
+	private Long journeysTo;
 	
+	public Long getJourneysTo() {
+		return journeysTo;
+	}
+
+	public void setJourneysTo(Long journeysTo) {
+		this.journeysTo = journeysTo;
+	}
+
+	public Long getJourneysFrom() {
+		return journeysFrom;
+	}
+
+	public void setJourneysFrom(Long journeysFrom) {
+		this.journeysFrom = journeysFrom;
+	}
+
 	public Station() {
 		
 	}
-	
+
 	public Station(Integer id, Integer stationId, String nameFi,
 			String nameSwe, String nameEng, String addressFi,
 			String addressSwe, String cityFi, String citySwe, 
