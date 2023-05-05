@@ -2,6 +2,7 @@ import React from 'react';
 import StationDetail from './station_detail'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import './stations.css'
 
 const Stations = ({ stations, select }) => {
     let stationrows = stations.map(s => <li className="list-group-item" onClick={() => select(s)}>{s.nameFi}</li> )
