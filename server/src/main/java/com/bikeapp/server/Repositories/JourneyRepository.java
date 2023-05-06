@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.bikeapp.server.Entities.Journey;
 
 public interface JourneyRepository extends JpaRepository<Journey,Integer> {
+	Page<Journey> findByDepartureStationContainingOrReturnStationContaining(String dstation, String rstation, Pageable pageable);
 
 
 }
