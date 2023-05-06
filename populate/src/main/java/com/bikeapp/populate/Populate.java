@@ -184,8 +184,8 @@ public class Populate {
             ex.printStackTrace();
         }
     
-		readFile("C:\\2021-05.csv", "journey");
-		readFile("C:\\Helsingin_ja_Espoon_kaupunkipy%C3%B6r%C3%A4asemat_avoin.csv", "station");
+		readFile("C:\\test.csv", "journey");
+		readFile("C:\\stations.csv", "station");
 		System.out.println("Ready to roll! All data fetched");
 		
 	}

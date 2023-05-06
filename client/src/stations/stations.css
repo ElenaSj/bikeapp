@@ -12,3 +12,11 @@
     margin-top: 10px;
  
 }
+
+.card {
+    width: 70%;
+}
+
+.list-group {
+    overflow: hidden;
+}
