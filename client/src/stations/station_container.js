@@ -26,7 +26,7 @@ const StationList = ({stations, select }) => {
 
 const StationContainer = () => {
     const [stations, getStations] = useState([])
-    const [selectedId, selectStation] = useState(0)
+    const [selectedId, selectStation] = useState(1)
     const [page, setPage] = useState(0)
 
     useEffect(() => {
