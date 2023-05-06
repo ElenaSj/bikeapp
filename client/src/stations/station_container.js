@@ -5,7 +5,7 @@ import axios from 'axios'
 import './stations.css'
 
 const Stations = ({ stations, select }) => {
-    let stationrows = stations.map(s => <li key={s.id} className="list-group-item" onClick={() => select(s.id)}>{s.nameFi} ({s.nameSwe})</li> )
+    let stationrows = stations.map(s => <li key={s.id} className="stationrow list-group-item" onClick={() => select(s.id)}>{s.nameFi} ({s.nameSwe})</li> )
     return (
         <>
             <ul className="list-group">
@@ -17,7 +17,7 @@ const Stations = ({ stations, select }) => {
 
 const StationList = ({stations, select }) => {
     return (
-        <div className="col-4">
+        <div>
             
             <Stations stations={stations} select={select}/>
         </div>
@@ -34,7 +34,17 @@ const Pagination = ({navigate, page}) => {
         )
 }
 
-
+const SearchBox = ({filter, changeText, search}) => {
+    return (
+    <div className='col'>
+    <label>Search for stations with name or address</label>
+    <div className="input-group mb-3">
+    <input type="text" class="form-control" value={filter} onChange={ev=>changeText(ev.target.value)} placeholder="Suvituulenkuja..." />
+    <button className="btn btn-outline-secondary" type="button" onClick={()=>search()} id="button-addon1">Search</button>
+    </div>
+    </div>
+    )
+}
 
 const StationContainer = () => {
     const [stations, getStations] = useState([])
@@ -52,7 +62,7 @@ const StationContainer = () => {
         setSearchFor(text)
     }
 
-    const Filter = () => {
+    const Search = () => {
         setPage(0)
         setFilter(searchFor)
     }
@@ -63,29 +73,23 @@ const StationContainer = () => {
     },[page, filter])
 
     return <div>
-        <h2>Stations</h2>
-        
         <div className="row">
-        <div className='col-4'>
-        <Pagination navigate={Navigate} page={page} />
-
-        
-        </div>
-            <div className='col'>
-            <label>Search for stations with name or address</label>
-            <div class="input-group mb-3">
-  <input type="text" class="form-control" value={searchFor} onChange={ev=>changeText(ev.target.value)} placeholder="Suvituulenkuja..." />
-  <button class="btn btn-outline-secondary" type="button" onClick={()=>Filter()} id="button-addon1">Search</button>
-</div>
-
-        </div>
-        
+            <div className='col-4'>
+                <h2>Stations</h2>
+            </div>
+            <div className='col-8'>
+                <SearchBox filter={searchFor} changeText={changeText} search={Search} />
+            </div>
         </div>
         <div className="row">
-        <StationList stations={ stations } select={ selectStation }/>
-        <StationDetail id={ selectedId }/>
-    
-    </div>
+            <div className='col-4'>
+                <Pagination navigate={Navigate} page={page} />
+                <StationList stations={ stations } select={ selectStation }/>
+            </div>
+            <div className='col-8'>
+                <StationDetail id={ selectedId }/>
+            </div>     
+        </div>
     </div>
 }
 

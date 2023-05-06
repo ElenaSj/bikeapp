@@ -32,7 +32,7 @@ const StationMap = ({position}) => {
 
     return (
     <div className="map">
-            <MapContainer style={{ height: '100vh', width: '100wh' }} center={position} zoom={13} scrollWheelZoom={true}>
+            <MapContainer style={{ height: '100vh', width: '100wh' }} center={position} zoom={13} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -57,7 +57,7 @@ const StationDetail = ({id}) => {
         },[id])
 
     return (
-        <div className="col-8">
+        <div>
         {!station.id && <p>Please select a station from the list to view detailed info</p>}
 
         {!!station.id && <div>
