@@ -31,11 +31,17 @@ public class StationController {
 	
 	@GetMapping("/stations")
 	public List<Station> getAll(
+			@RequestParam(required = false) String filter,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "50") int size){
 		List<Station> stations = new ArrayList<>();
 		Pageable paging = PageRequest.of(page, size);
-		Page<Station> ps = repo.findAll(paging);
+		Page<Station> ps;
+		if (filter==null || filter.isEmpty()) {
+			ps = repo.findAll(paging);
+		} else {
+			ps = repo.findByNameFiContainingOrNameSweContaining(filter, filter, paging);
+		}
 		stations = ps.getContent();
 		return stations;
 	}
