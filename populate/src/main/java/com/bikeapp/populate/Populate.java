@@ -50,14 +50,17 @@ public class Populate {
         }
         catch(SQLException ex){
             System.out.println("Not dropped: "+table);
+            ex.printStackTrace();
         }
         try{
             Statement stm=con.createStatement();
             stm.execute("CREATE TABLE "+table+create);
+            System.out.println("Created table: "+table);
             stm.close();
         }
         catch(SQLException ex){
             System.out.println("Not created: "+table);
+            ex.printStackTrace();
         }
     }
 	
@@ -176,7 +179,20 @@ public class Populate {
         		+ "return_station_id int, "
         		+ "return_station varchar(40), "
         		+ "distance int, "
-        		+ "duration int)");   		
+        		+ "duration int)"); 
+        dropCreate(con, "bikestation", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
+        		+ "station_id int, "
+        		+ "name_fi varchar(40), "
+        		+ "name_swe varchar(40), "
+        		+ "name_eng varchar(40), "
+        		+ "address_fi varchar(100), "
+        		+ "address_swe varchar(100), "
+        		+ "city_fi varchar(20), "
+        		+ "city_swe varchar(20), "
+        		+ "operator varchar(32), "
+        		+ "capacity int, "
+        		+ "longitude varchar(20), "
+        		+ "latitude varchar(20))"); 
         try{
             con.close();
         }
@@ -184,8 +200,8 @@ public class Populate {
             ex.printStackTrace();
         }
     
-		readFile("C:\\test.csv", "journey");
-		readFile("C:\\stations.csv", "station");
+		readFile("C:\\2021-06.csv", "journey");
+		readFile("C:\\Helsingin_ja_Espoon_kaupunkipy%C3%B6r%C3%A4asemat_avoin.csv", "station");
 		System.out.println("Ready to roll! All data fetched");
 		
 	}

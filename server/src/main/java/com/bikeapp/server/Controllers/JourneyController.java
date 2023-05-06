@@ -24,11 +24,17 @@ public class JourneyController {
 	
 	@GetMapping("/journeys")
 	public List<Journey> getAll(
+			@RequestParam(required = false) String station,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "50") int size){
 		List<Journey> journeys = new ArrayList<>();
 		Pageable paging = PageRequest.of(page, size);
-		Page<Journey> pj = repo.findAll(paging);
+		Page<Journey> pj;
+		if (station==null || station.isEmpty()) {
+			pj=repo.findAll(paging);
+		} else {
+			pj=repo.findByDepartureStationContainingOrReturnStationContaining(station, station, paging);
+		}
 		journeys = pj.getContent();
 		return journeys;
 	}

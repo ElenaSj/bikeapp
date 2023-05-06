@@ -40,7 +40,7 @@ public class StationController {
 		if (filter==null || filter.isEmpty()) {
 			ps = repo.findAll(paging);
 		} else {
-			ps = repo.findByNameFiContainingOrNameSweContaining(filter, filter, paging);
+			ps = repo.findByNameFiContainingOrNameSweContainingOrAddressFiContainingOrAddressSweContaining(filter, filter, filter, filter, paging);
 		}
 		stations = ps.getContent();
 		return stations;
