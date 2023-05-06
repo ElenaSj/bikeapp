@@ -28,6 +28,7 @@ const StationContainer = () => {
     const [stations, getStations] = useState([])
     const [selectedId, selectStation] = useState(1)
     const [page, setPage] = useState(0)
+    const [filter, setFilter] = useState("")
 
     useEffect(() => {
         axios.get('/api/stations?page='+page)
@@ -47,10 +48,10 @@ const StationContainer = () => {
         </div>
         </div>
             <div className='col'>
-            <label>asdiasjoiahoiahsfoihasfoiahfoisfi</label>
-            <div class="input-group mb-3">
+            <label>Search for stations with name or address</label>
+            <div class="input-group mb-3" placeholder="Suvituulenkuja...">
   <input type="text" class="form-control" placeholder="" />
-  <button class="btn btn-outline-secondary" type="button" id="button-addon1">Button</button>
+  <button class="btn btn-outline-secondary" type="button" id="button-addon1">Search</button>
 </div>
 
         </div>
