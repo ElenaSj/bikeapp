@@ -31,6 +31,7 @@ public class JourneyController {
 			@RequestParam(required = false) String station,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "50") int size){
+		
 		try {
 			Pageable paging = PageRequest.of(page, size);
 			Page<Journey> pj;

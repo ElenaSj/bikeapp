@@ -1,13 +1,16 @@
 package com.bikeapp.server.Controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,27 +33,38 @@ public class StationController {
 	StationWithJourneysRepository sjrepo;
 	
 	@GetMapping("/stations")
-	public List<Station> getAll(
+	public ResponseEntity<Map<String, Object>> getAll(
 			@RequestParam(required = false) String filter,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "50") int size){
-		List<Station> stations = new ArrayList<>();
-		Pageable paging = PageRequest.of(page, size);
-		Page<Station> ps;
-		if (filter==null || filter.isEmpty()) {
-			ps = repo.findAll(paging);
-		} else {
-			ps = repo.findByNameFiContainingOrNameSweContainingOrAddressFiContainingOrAddressSweContaining(filter, filter, filter, filter, paging);
+		
+		try {
+			Pageable paging = PageRequest.of(page, size);
+			Page<Station> ps;
+		
+			if (filter==null || filter.isEmpty()) {
+				ps = repo.findAll(paging);
+			} else {
+				ps = repo.findByNameFiContainingOrNameSweContainingOrAddressFiContainingOrAddressSweContaining(filter, filter, filter, filter, paging);
+			}
+			
+			Map<String, Object> response = new HashMap<>();
+			
+			response.put("stations", ps.getContent());
+			response.put("totalPages", ps.getTotalPages());
+		
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		
+		} catch (Exception ex) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		stations = ps.getContent();
-		return stations;
 	}
 	
 	@GetMapping("/stations/{id}")
-	public StationWithJourneys get(@PathVariable int id) {
+	public ResponseEntity<?> get(@PathVariable int id) {
 		StationWithJourneys station = sjrepo.findById(id).orElse(null);
-		if (station==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
-		return station;
+		if (station==null) return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(station);
 	}
 
 }
