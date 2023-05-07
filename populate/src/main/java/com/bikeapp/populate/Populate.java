@@ -13,11 +13,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 @Component
 public class Populate {
+	private static final DecimalFormat df = new DecimalFormat("0.00");
+	private static final DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+
+	
 	@Value("${spring.datasource.url}")
     String url;
     @Value("${spring.datasource.username}")
@@ -125,8 +131,8 @@ public class Populate {
 		j.setDepartureStation(departureStation);
 		j.setReturnStationId(returnStationId);
 		j.setReturnStation(returnStation);
-		j.setDistance(distance/1000);
-		j.setDuration(duration/60);
+		j.setDistance(Double.valueOf(df.format(1.0*distance/1000)));
+		j.setDuration(duration);
 		jrepo.saveAndFlush(j);
 	}
 	
@@ -166,6 +172,9 @@ public class Populate {
 	}
 
 	public void init() throws IOException {
+	    decimalFormatSymbols.setDecimalSeparator('.');
+	    df.setDecimalFormatSymbols(decimalFormatSymbols);
+	    
 		Connection con=getConnection();
         if (con==null){
             System.out.println("Error: Could not connect to database");
@@ -178,9 +187,9 @@ public class Populate {
         		+ "departure_station varchar(40), "
         		+ "return_station_id int, "
         		+ "return_station varchar(40), "
-        		+ "distance int, "
+        		+ "distance double, "
         		+ "duration int)"); 
-        dropCreate(con, "bikestation", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
+        /*dropCreate(con, "bikestation", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
         		+ "station_id int, "
         		+ "name_fi varchar(40), "
         		+ "name_swe varchar(40), "
@@ -192,7 +201,7 @@ public class Populate {
         		+ "operator varchar(32), "
         		+ "capacity int, "
         		+ "longitude varchar(20), "
-        		+ "latitude varchar(20))"); 
+        		+ "latitude varchar(20))"); */
         try{
             con.close();
         }
@@ -200,8 +209,8 @@ public class Populate {
             ex.printStackTrace();
         }
     
-		readFile("C:\\2021-06.csv", "journey");
-		readFile("C:\\Helsingin_ja_Espoon_kaupunkipy%C3%B6r%C3%A4asemat_avoin.csv", "station");
+		readFile("C:\\test.csv", "journey");
+		//readFile("C:\\Helsingin_ja_Espoon_kaupunkipy%C3%B6r%C3%A4asemat_avoin.csv", "station");
 		System.out.println("Ready to roll! All data fetched");
 		
 	}
