@@ -14,11 +14,11 @@ const SearchBox = ({filter, changeText, search}) => {
   )
 }
 
-const Pagination = ({navigate, page}) => {
+const Pagination = ({navigate, page, pages}) => {
   return (
     <div className="container">
       <button id="paginationbutton" onClick={() => navigate('previous')} type="button" className="btn btn-light">Previous</button>
-      <button id="paginationbutton" type="button" className="btn btn-secondary" disabled>Page {page+1}</button>
+      <button id="paginationbutton" type="button" className="btn btn-secondary" disabled>Page {page+1} of {pages}</button>
       <button id="paginationbutton" onClick={() => navigate('next')} type="button" className="btn btn-light">Next</button>
     </div>
   )
@@ -63,10 +63,14 @@ const JourneyList = () => {
   const [page, setPage] = useState(0)
   const [searchFor, setSearchFor] = useState('')
   const [filter, setFilter] = useState('')
+  const [pages, setPages] = useState(0)
 
   useEffect(() => {
     axios.get('/api/journeys?page='+page+'&station='+filter)
-      .then(response => getJourneys(response.data))
+      .then(response => {
+        getJourneys(response.data.journeys)
+        setPages(response.data.totalPages)
+      })
   },[page,filter])
 
   const changeText = text => {
@@ -79,7 +83,7 @@ const JourneyList = () => {
   }
 
   const Navigate = direction => {
-    if (direction==='next') setPage(page+1)
+    if (direction==='next' && page < pages-1) setPage(page+1)
     if (direction==='previous' && page>0) setPage(page-1)
   }
 
@@ -87,7 +91,7 @@ const JourneyList = () => {
     <div className="row journeys">
       <h2>Bike journeys</h2>
       <div className="col-9">
-        <Pagination navigate={Navigate} page={page} />
+        <Pagination navigate={Navigate} page={page} pages={pages} />
         <Journeys journeys={journeys} />
       </div>
       <div className="col-3">
