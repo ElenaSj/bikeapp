@@ -69,7 +69,7 @@ const StationContainer = () => {
 
   useEffect(() => {
     axios.get('/api/stations?page='+page+'&filter='+filter)
-      .then(response => getStations(response.data))
+      .then(response => getStations(response.data.stations))
   },[page, filter])
 
   return <div>

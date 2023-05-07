@@ -1,14 +1,14 @@
 package com.bikeapp.server.Controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +30,18 @@ public class JourneyController {
 	public ResponseEntity<Map<String, Object>> getAll(
 			@RequestParam(required = false) String station,
 			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "50") int size){
+			@RequestParam(defaultValue = "50") int size,
+			@RequestParam(defaultValue = "dstation") String sort){
 		
+		Pageable paging = PageRequest.of(page, size);
 		try {
-			Pageable paging = PageRequest.of(page, size);
+			if (sort.equals("dstation")) paging = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"departureStation"));
+			if (sort.equals("rstation")) paging = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"returnStation"));
+			if (sort.equals("longestd")) paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"distance"));
+			if (sort.equals("shortestd")) paging = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"distance"));
+			if (sort.equals("longestt")) paging = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"duration"));
+			if (sort.equals("shortestt")) paging = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"duration"));
+			
 			Page<Journey> pj;
 		
 			if (station==null || station.isEmpty()) {
