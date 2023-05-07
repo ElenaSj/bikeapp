@@ -15,7 +15,7 @@ const SearchBox = ({filter, changeText, search}) => {
 }
 
 const Pagination = ({navigate, page}) => {
-  return(
+  return (
     <div className="container">
       <button id="paginationbutton" onClick={() => navigate('previous')} type="button" className="btn btn-light">Previous</button>
       <button id="paginationbutton" type="button" className="btn btn-secondary" disabled>Page {page+1}</button>
@@ -37,7 +37,6 @@ const Journeys = ({ journeys }) => {
   })
 
   return (
-
     <div className="journeytable">
       <table className="table table-striped">
         <thead>
@@ -53,7 +52,6 @@ const Journeys = ({ journeys }) => {
         </tbody>
       </table>
     </div>
-
   )
 }
 
