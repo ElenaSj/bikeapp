@@ -72,7 +72,7 @@ const StationContainer = () => {
       .then(response => getStations(response.data.stations))
   },[page, filter])
 
-  return <div>
+  return <div className='stationcontainer'>
     <div className="row">
       <div className='col-4'>
         <h2>Stations</h2>

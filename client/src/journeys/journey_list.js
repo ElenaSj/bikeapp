@@ -1,18 +1,7 @@
 import { useEffect, useState, React } from 'react'
 import axios from 'axios'
 import './journey_list.css'
-
-const SearchBox = ({filter, changeText, search}) => {
-  return (
-    <div className='col'>
-      <label>Search for journeys with station name</label>
-      <div className="input-group mb-3">
-        <input type="text" className="form-control" value={filter} onChange={ev => changeText(ev.target.value)} placeholder="Suvituulenkuja..." />
-        <button className="btn btn-outline-secondary" type="button" onClick={() => search()} id="button-addon1">Search</button>
-      </div>
-    </div>
-  )
-}
+import SearchBox from '../modules/searchbox'
 
 const SortOptions = ({setSort}) => {
   return(
@@ -134,7 +123,7 @@ const JourneyList = () => {
       </div>
       <div className="col-3">
         <h3>Search & sort journeys</h3>
-        <SearchBox filter={searchFor} changeText={changeText} search={Search} />
+        <SearchBox filter={searchFor} changeText={changeText} search={Search} label="Search for journeys with station name" />
         <SortOptions setSort={Sort} />
       </div>
     </div>
