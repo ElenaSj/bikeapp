@@ -31,36 +31,27 @@ public class StationWithJourneys {
 	public Long getJourneysTo() {
 		return journeysTo;
 	}
-
 	public void setJourneysTo(Long journeysTo) {
 		this.journeysTo = journeysTo;
 	}
-
 	public Long getJourneysFrom() {
 		return journeysFrom;
 	}
-
 	public void setJourneysFrom(Long journeysFrom) {
 		this.journeysFrom = journeysFrom;
 	}
-	
 	public String getCityFi() {
 		return cityFi;
 	}
-
 	public void setCityFi(String cityFi) {
 		this.cityFi = cityFi;
 	}
-
 	public String getCitySwe() {
 		return citySwe;
 	}
-
 	public void setCitySwe(String citySwe) {
 		this.citySwe = citySwe;
 	}
-
-	
 	public Integer getId() {
 		return id;
 	}
@@ -127,10 +118,4 @@ public class StationWithJourneys {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
-	
-	
-	
-	
-	
 }

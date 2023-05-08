@@ -74,8 +74,4 @@ public class Journey {
 	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
-	
-	
-	
-
 }

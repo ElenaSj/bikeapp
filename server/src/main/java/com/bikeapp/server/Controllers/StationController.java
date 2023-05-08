@@ -1,8 +1,6 @@
 package com.bikeapp.server.Controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.bikeapp.server.Entities.Station;
 import com.bikeapp.server.Entities.StationWithJourneys;
@@ -66,5 +63,4 @@ public class StationController {
 		if (station==null) return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(station);
 	}
-
 }

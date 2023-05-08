@@ -2,7 +2,7 @@
 
 Bikeapp is running on [Render](www.myaddress.com)
 
-Feel free to visit! **NB!** Bikeapp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
+Feel free to visit! **Disclaimer:** Bikeapp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable at times. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
 
 ## General
 
@@ -14,7 +14,7 @@ Bikeapp consists of three parts:
 
 ## Instructions to run the app locally
 
-**NB!** The app is tested to run on Windows and these instructions are meant for Windows. I won't bet my money on it running on other OS.
+**Disclaimer:** The app is tested to run on Windows and these instructions are meant for Windows. I won't bet my money on it running on other OS.
 
 ### Prerequisites
 
@@ -23,9 +23,9 @@ Bikeapp consists of three parts:
 
 ### Steps to run
 
-1. Before you launch the app for the first time
+1. Have a MySQL database ready
 **Option 1:**
-- Create a database on MySQL that you want to use for the app.
+- On MySQL create a database that you want to use for the app.
 - Create a user with password authentication for the database and grant all privileges for the user.
 **Option 2:**
 - Use a database and user that you already have.
@@ -34,15 +34,14 @@ Bikeapp consists of three parts:
 **Option 1, import MySQL dump to your database**
 - [Download bikeapp.sql.zip](https://drive.google.com/file/d/1vcsyir1gukQSPs7qvlf0K2hyHMJ-4jB1/view?usp=sharing)
 - Unpack and import to your database
-**Option 2, use the Bikeapp Populate**
+**Option 2, use the Bikeapp Populate** NB! Importing large files takes some time, please bear with me.
 - Have your bike journey and station data files stored somewhere on your machine.
 - Navigate to **bikeapp/populate/src/main/resources** and modify the **application.properties** file to match your database config.
-- Run the Bikeapp Populate app to fetch the data **NB!** Importing large files takes some time, please bear with me.
 - On Command Prompt, cd to bikeapp/populate and run the following command: `mvnw spring-boot:run`
 - The app will query if you want to create database tables for journeys and bikestations. Answer yes if you don't have them already.
 - The app will query what kind of data you want to import. Answer "station" for bike stations and "journey" for bike journeys.
 - The app will query the path to your data file.
-- After you have imported all the data you want to use you're ready to roll. Terminate the process. 
+- When you have imported all the data you want to use, you're good to go.
 
 3. Run the Actual BikeApp TM
 - Navigate to **bikeapp/server/src/main/resources** and modify the **application.properties** file to match your database config.
@@ -57,7 +56,7 @@ Bikeapp consists of three parts:
     * Bootstrap: To make the UI easier on the eye I decided to go with the Bootstrap library (instead for eg. MUI) because the UI is quite simple.
     * Leaflet & leaflet-react: I used Leaflet for the station maps, because it's lightweight with sufficient functionality for this use case
 * **Docker:** to deploy the app to Render
-* **Db4free.net and Render:** For demonstrative purposes I deployed the app to Render with a database on db4free.net. I used these service providers because they are free of charge and no risk for surprise costs. For actual production deployment neither of these options would be viable and I'd suggest a reliable cloud service. Eg. if we were to use AWS one option would be to have AWS RDS for database, S3 Bucket static website hosting for frontend and AWS Elastic Beanstalk / EC2 for backend.
+* **Db4free.net and Render:** For demonstrative purposes I deployed the app to Render with a database on db4free.net. I used these service providers because they are free of charge and no risk for surprise costs. For actual production deployment neither of these options would be viable and I'd suggest a reliable cloud service. Eg. if we were to use AWS one option would be to have AWS RDS for database, S3 Bucket static website hosting for front-end and AWS Elastic Beanstalk / EC2 for back-end.
 
 ## Features
 * Importing journey and bike station data from csv files to database with data validation

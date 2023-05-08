@@ -21,11 +21,11 @@ import java.util.Scanner;
 
 @Component
 public class Populate {
+	
 	private static final DecimalFormat df = new DecimalFormat("0.00");
 	private static final DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
 	private static final Scanner sc = new Scanner(System.in);
 
-	
 	@Value("${spring.datasource.url}")
     String url;
     @Value("${spring.datasource.username}")
@@ -43,30 +43,28 @@ public class Populate {
             Connection con=DriverManager.getConnection(url,user,psw);
             System.out.println("Connected to database");
             return con;
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return null;
     }
 	
 	private static void dropCreate(Connection con,String table,String create){
-        try{
+        try {
             Statement stm=con.createStatement();
             stm.execute("DROP TABLE "+table);
             stm.close();
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             System.out.println("Not dropped: "+table);
             ex.printStackTrace();
         }
-        try{
+        
+        try {
             Statement stm=con.createStatement();
             stm.execute("CREATE TABLE "+table+create);
             System.out.println("Created table: "+table);
             stm.close();
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             System.out.println("Not created: "+table);
             ex.printStackTrace();
         }
@@ -77,6 +75,7 @@ public class Populate {
 			System.out.println("Starting to read data from "+file);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 			String headers = reader.readLine();
+			
 			if (type.equalsIgnoreCase("journey")) {
 				reader.lines().forEach(line -> saveJourney(line));
 				System.out.println("Finished reading data from "+file);
@@ -86,7 +85,8 @@ public class Populate {
 			} else {
 				System.out.println("Don't recognize data type "+type+", please try again");
 			}
-			close(reader);
+			
+			closeReader(reader);
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found, please try again");
 			e.printStackTrace();
@@ -109,7 +109,6 @@ public class Populate {
 			duration = Integer.valueOf(parts[7]);
 			departureStationId = Integer.valueOf(parts[2]);
 			returnStationId = Integer.valueOf(parts[4]);
-
 		} catch (NumberFormatException ex) {
 			System.out.println("Skipped line "+journeyLine);
 			System.out.println("failed to parse integer "+ex.getMessage());
@@ -121,12 +120,11 @@ public class Populate {
 		try {
 			departureTime = LocalDateTime.parse(parts[0]);
 			returnTime = LocalDateTime.parse(parts[1]);
-		} catch (DateTimeParseException ex){
+		} catch (DateTimeParseException ex) {
 			System.out.println("Skipped line "+journeyLine);
 			System.out.println("failed to parse date/time "+ex.getMessage());
 			return;
 		}
-		
 		
 		Journey j = new Journey();
 		j.setDepartureTime(departureTime);
@@ -168,12 +166,23 @@ public class Populate {
 		return station;
 	}
 	
-	public void close(BufferedReader reader) {
+	// just a helper method for closing the reader
+	public void closeReader(BufferedReader reader) {
 		try {
 			reader.close();
 		} catch (Exception e){
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	// helper method for closing the db connection
+	public void closeConnection(Connection con) {
+		try{
+            con.close();
+        }
+        catch(SQLException ex){
+            ex.printStackTrace();
+        }
 	}
 	
 	// Asks the user for files to import to the db
@@ -183,9 +192,9 @@ public class Populate {
 			String input =  sc.nextLine();
 			
 			if (input.equalsIgnoreCase("yes")) {
-				System.out.println("What kind of data do you want to import? (station/journey");
+				System.out.println("What kind of data do you want to import? (station/journey)");
 				String type = sc.nextLine();
-				System.out.println("Where is your file? (path to file eg c://bikedata/journeys.csv)");
+				System.out.println("Where is your file? (path to file eg. c://bikedata/journeys.csv)");
 				String path = sc.nextLine();
 				try {
 					readFile(path, type);
@@ -198,9 +207,9 @@ public class Populate {
 	}
 	
 	// Asks the user if they want to create database table and if so, 
-	// drops the table if it exists and creates it
+	// calls the method to drop and create the table
 	public void queryTable(String tableType) {
-		System.out.println("Do you want to drop/create table "+tableType+" ? (yes/no)");
+		System.out.println("Do you want to drop/create database table: "+tableType+"? (yes/no)");
 		String input = sc.nextLine();
 		if (input.equalsIgnoreCase("yes") && tableType.equalsIgnoreCase("journey")) {
 			Connection con=getConnection();
@@ -217,13 +226,9 @@ public class Populate {
 	        		+ "return_station varchar(40), "
 	        		+ "distance double, "
 	        		+ "duration int)");
-	        try{
-	            con.close();
-	        }
-	        catch(SQLException ex){
-	            ex.printStackTrace();
-	        }
+	        closeConnection(con);
 		}
+		
 		if (input.equalsIgnoreCase("yes") && tableType.equalsIgnoreCase("station")) {
 			Connection con=getConnection();
 	        if (con==null){
@@ -243,14 +248,8 @@ public class Populate {
 	        		+ "capacity int, "
 	        		+ "longitude varchar(20), "
 	        		+ "latitude varchar(20))");
-	        try{
-	            con.close();
-	        }
-	        catch(SQLException ex){
-	            ex.printStackTrace();
-	        }
-		}
-		
+	        closeConnection(con);
+		}	
 	}
 
 	public void init() throws IOException {
@@ -261,7 +260,5 @@ public class Populate {
 	    queryTable("journey");
 		queryFiles();
 		System.out.println("All right, you're ready to roll!");
-		
 	}
-
 }

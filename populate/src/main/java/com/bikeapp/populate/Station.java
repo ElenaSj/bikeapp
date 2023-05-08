@@ -49,20 +49,15 @@ public class Station {
 	public String getCityFi() {
 		return cityFi;
 	}
-
 	public void setCityFi(String cityFi) {
 		this.cityFi = cityFi;
 	}
-
 	public String getCitySwe() {
 		return citySwe;
 	}
-
 	public void setCitySwe(String citySwe) {
 		this.citySwe = citySwe;
 	}
-
-	
 	public Integer getId() {
 		return id;
 	}
@@ -129,10 +124,4 @@ public class Station {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
-	
-	
-	
-	
-	
 }

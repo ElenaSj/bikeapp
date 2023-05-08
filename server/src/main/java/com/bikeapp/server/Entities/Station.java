@@ -21,48 +21,19 @@ public class Station {
 	private Integer capacity;
 	private String longitude;
 	private String latitude;
-
-	public Station() {
-		
-	}
-
-	public Station(Integer id, Integer stationId, String nameFi,
-			String nameSwe, String nameEng, String addressFi,
-			String addressSwe, String cityFi, String citySwe, 
-			String operator, Integer capacity,
-			String longitude, String latitude) {
-		this.id=id;
-		this.stationId=stationId;
-		this.nameFi=nameFi;
-		this.nameSwe=nameSwe;
-		this.nameEng=nameEng;
-		this.addressFi=addressFi;
-		this.addressSwe=addressSwe;
-		this.cityFi=cityFi;
-		this.citySwe=citySwe;
-		this.operator=operator;
-		this.capacity=capacity;
-		this.longitude=longitude;
-		this.latitude=latitude;
-	}
 	
 	public String getCityFi() {
 		return cityFi;
 	}
-
 	public void setCityFi(String cityFi) {
 		this.cityFi = cityFi;
 	}
-
 	public String getCitySwe() {
 		return citySwe;
 	}
-
 	public void setCitySwe(String citySwe) {
 		this.citySwe = citySwe;
-	}
-
-	
+	}	
 	public Integer getId() {
 		return id;
 	}
@@ -129,10 +100,4 @@ public class Station {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
-	
-	
-	
-	
-	
 }
