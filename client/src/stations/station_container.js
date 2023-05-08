@@ -5,26 +5,7 @@ import axios from 'axios'
 import './stations.css'
 import SearchBox from '../modules/searchbox'
 import Pagination from '../modules/pagination'
-
-const Stations = ({ stations, select }) => {
-  let stationrows = stations.map(s => <li key={s.id} className="stationrow list-group-item" onClick={() => select(s.id)}>{s.nameFi} ({s.nameSwe})</li> )
-  return (
-    <>
-      <ul className="list-group">
-        {stationrows}
-      </ul>
-    </>
-  )
-}
-
-const StationList = ({stations, select }) => {
-  return (
-    <div>
-
-      <Stations stations={stations} select={select}/>
-    </div>
-  )
-}
+import StationList from './station_list'
 
 const StationContainer = () => {
   const [stations, getStations] = useState([])
@@ -35,8 +16,8 @@ const StationContainer = () => {
   const [pages, setPages] = useState(1)
 
   const Navigate = direction => {
-    if (direction==='next') setPage(page+1)
-    if (direction==='previous' && page>0) setPage(page-1)
+    if (direction==='next' && page < pages-1) setPage(page+1)
+    if (direction==='previous' && page > 0) setPage(page-1)
   }
 
   const changeText = text => {

@@ -102,7 +102,7 @@ const JourneyList = () => {
 
   const Navigate = direction => {
     if (direction==='next' && page < pages-1) setPage(page+1)
-    if (direction==='previous' && page>0) setPage(page-1)
+    if (direction==='previous' && page > 0) setPage(page-1)
   }
 
   return (
