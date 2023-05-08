@@ -2,6 +2,7 @@ import { useEffect, useState, React } from 'react'
 import axios from 'axios'
 import './journey_list.css'
 import SearchBox from '../modules/searchbox'
+import Pagination from '../modules/pagination'
 
 const SortOptions = ({setSort}) => {
   return(
@@ -32,16 +33,6 @@ const SortOptions = ({setSort}) => {
         <label className="form-check-label" htmlFor="radio6">Shortest duration</label>
       </div>
 
-    </div>
-  )
-}
-
-const Pagination = ({navigate, page, pages}) => {
-  return (
-    <div className="container">
-      <button id="paginationbutton" onClick={() => navigate('previous')} type="button" className="btn btn-light">Previous</button>
-      <button id="paginationbutton" type="button" className="btn btn-secondary" disabled>Page {page+1} of {pages}</button>
-      <button id="paginationbutton" onClick={() => navigate('next')} type="button" className="btn btn-light">Next</button>
     </div>
   )
 }

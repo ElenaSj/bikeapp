@@ -3,7 +3,7 @@
 }
 
 .journeytable {
-    height: 50%;
+    height: 75vh;
     overflow: auto;
 }
 
