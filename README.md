@@ -1,8 +1,8 @@
-# bikeapp
+# BikeApp
 
-Bikeapp is running on [Render](www.myaddress.com)
+BikeApp is running on [Render.com](https://bikeapp-ftwz.onrender.com) Feel free to visit! 
 
-Feel free to visit! **Disclaimer:** Bikeapp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable at times. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
+**Disclaimer:** Bikeapp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable at times. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
 
 ## General
 
@@ -24,17 +24,17 @@ Bikeapp consists of three parts:
 ### Steps to run
 
 1. Have a MySQL database ready
-**Option 1:**
+**Option 1:**  
 - On MySQL create a database that you want to use for the app.
 - Create a user with password authentication for the database and grant all privileges for the user.
-**Option 2:**
+**Option 2:**  
 - Use a database and user that you already have.
 
 2. Get the data to your database
-**Option 1, import MySQL dump to your database**
+**Option 1, import MySQL dump to your database**  
 - [Download bikeapp.sql.zip](https://drive.google.com/file/d/1vcsyir1gukQSPs7qvlf0K2hyHMJ-4jB1/view?usp=sharing)
 - Unpack and import to your database
-**Option 2, use the Bikeapp Populate** NB! Importing large files takes some time, please bear with me.
+**Option 2, use the Bikeapp Populate** NB! Importing large files takes some time, please bear with me.  
 - Have your bike journey and station data files stored somewhere on your machine.
 - Navigate to **bikeapp/populate/src/main/resources** and modify the **application.properties** file to match your database config.
 - On Command Prompt, cd to bikeapp/populate and run the following command: `mvnw spring-boot:run`
@@ -53,8 +53,8 @@ Bikeapp consists of three parts:
 * **MySQL database:** I decided to go with a relation database because there is some relational nature to the data. I also saw a possibility that if the app were to be developed further, the data might get more complex eg. with users, more info on the service providers, links to public transport... However, the data structure at the moment is not very complex so a document database would have been fine too. My other option was to go with a MongoDB database and an Express.js server with mongoose for back-end. 
 * **SpringBoot web app:** I decided to develop the backend with SpringBoot because the JPA repository has nice functionality for pagination & sorting.
 * **React app:** Just plain React, no Redux this time because the app is quite small and I didn't see a need for more complex state handling.
-    * Bootstrap: To make the UI easier on the eye I decided to go with the Bootstrap library (instead for eg. MUI) because the UI is quite simple.
-    * Leaflet & leaflet-react: I used Leaflet for the station maps, because it's lightweight with sufficient functionality for this use case
+    * **Bootstrap:** To make the UI easier on the eye I decided to go with the Bootstrap library (instead for eg. MUI) because the UI is quite simple.
+    * **Leaflet & leaflet-react:** I used Leaflet for the station maps, because it's lightweight with sufficient functionality for this use case
 * **Docker:** to deploy the app to Render
 * **Db4free.net and Render:** For demonstrative purposes I deployed the app to Render with a database on db4free.net. I used these service providers because they are free of charge and no risk for surprise costs. For actual production deployment neither of these options would be viable and I'd suggest a reliable cloud service. Eg. if we were to use AWS one option would be to have AWS RDS for database, S3 Bucket static website hosting for front-end and AWS Elastic Beanstalk / EC2 for back-end.
 
