@@ -2,7 +2,7 @@
 
 Bikeapp is running on [Render](www.myaddress.com)
 
-Feel free to visit! **NB!** Bikeapp on Render doesn't contain all of the data due to database size restrictions. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
+Feel free to visit! **NB!** Bikeapp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
 
 ## General
 
