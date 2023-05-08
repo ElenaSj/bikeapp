@@ -1,8 +1,8 @@
 # BikeApp
 
-BikeApp is running on [Render.com](https://bikeapp-ftwz.onrender.com) Feel free to visit! 
+BikeApp is running on [Render.com](https://bikeapp-ftwz.onrender.com). Feel free to visit! 
 
-**Disclaimer:** Bikeapp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable at times. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
+**Disclaimer:** BikeApp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable at times. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
 
 ## General
 
@@ -20,6 +20,7 @@ Bikeapp consists of three parts:
 
 - Java Runtime Environment that can run Java-17
 - MySQL
+- Downloaded source code from this repo
 
 ### Steps to run
 
