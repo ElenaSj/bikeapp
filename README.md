@@ -24,24 +24,24 @@ Bikeapp consists of three parts:
 ### Steps to run
 
 1. Have a MySQL database ready
-* Option 1
-  * On MySQL create a database that you want to use for the app.
-  * Create a user with password authentication for the database and grant all privileges for the user.
-* Option 2
-  * Use a database and user that you already have.
+  * Option 1
+    * On MySQL create a database that you want to use for the app.
+    * Create a user with password authentication for the database and grant all privileges for the user.
+  * Option 2
+    * Use a database and user that you already have.
 
 2. Get the data to your database
-* Option 1, import MySQL dump to your database 
-  * [Download bikeapp.sql.zip](https://drive.google.com/file/d/1vcsyir1gukQSPs7qvlf0K2hyHMJ-4jB1/view?usp=sharing)
-  * Unpack and import to your database. [See instructions if needed](https://bobcares.com/blog/load-sql-file-into-mysql/)
-* Option 2, use the Bikeapp Populate 
-  * Have your bike journey and station data files stored somewhere on your machine.
-  * Navigate to **bikeapp/populate/src/main/resources** and modify the **application.properties** file to match your database config.
-  * On Command Prompt, cd to bikeapp/populate and run the following command: `mvnw spring-boot:run`
-  * The app will query if you want to create database tables for journeys and bikestations. Answer yes if you don't have them already.
-  * The app will query what kind of data you want to import. Answer "station" for bike stations and "journey" for bike journeys.
-  * The app will query the path to your data file. **NB!** Importing large files takes some time, please bear with me.
-  * When you have imported all the data you want to use, you're good to go.
+  * Option 1, import MySQL dump to your database 
+    * [Download bikeapp.sql.zip](https://drive.google.com/file/d/1vcsyir1gukQSPs7qvlf0K2hyHMJ-4jB1/view?usp=sharing)
+    * Unpack and import to your database. [See instructions if needed](https://bobcares.com/blog/load-sql-file-into-mysql/)
+  * Option 2, use the Bikeapp Populate 
+    * Have your bike journey and station data files stored somewhere on your machine.
+    * Navigate to **bikeapp/populate/src/main/resources** and modify the **application.properties** file to match your database config.
+    * On Command Prompt, cd to bikeapp/populate and run the following command: `mvnw spring-boot:run`
+    * The app will query if you want to create database tables for journeys and bikestations. Answer yes if you don't have them already.
+    * The app will query what kind of data you want to import. Answer "station" for bike stations and "journey" for bike journeys.
+    * The app will query the path to your data file. **NB!** Importing large files takes some time, please bear with me.
+    * When you have imported all the data you want to use, you're good to go.
 
 3. Run the Actual BikeApp TM
 - Navigate to **bikeapp/server/src/main/resources** and modify the **application.properties** file to match your database config.
