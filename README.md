@@ -1,8 +1,13 @@
 # BikeApp
 
-BikeApp is running on [Render.com](https://bikeapp-ftwz.onrender.com). Feel free to visit! 
+BikeApp is running [Render.com](https://bikeapp-ftwz.onrender.com). Feel free to visit! 
 
-**Disclaimer:** BikeApp on Render doesn't contain all of the data due to database size restrictions. Database connection might be slow and unstable at times. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
+**Disclaimers:**
+
+
+Please wait patiently for the page to load, it can take some time as it's running on the free tier Render. Database connection might be slow and unstable at times.
+
+BikeApp on Render doesn't contain all of the data due to database size restrictions. If you want to see all of the data, you can run the app locally on your machine. Check for instructions below.
 
 ## General
 
