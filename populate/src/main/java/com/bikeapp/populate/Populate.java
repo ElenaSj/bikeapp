@@ -56,7 +56,6 @@ public class Populate {
             stm.close();
         } catch (SQLException ex) {
             System.out.println("Not dropped: "+table);
-            ex.printStackTrace();
         }
         
         try {
