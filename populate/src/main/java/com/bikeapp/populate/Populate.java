@@ -17,11 +17,13 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 
 @Component
 public class Populate {
 	private static final DecimalFormat df = new DecimalFormat("0.00");
 	private static final DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+	private static final Scanner sc = new Scanner(System.in);
 
 	
 	@Value("${spring.datasource.url}")
@@ -75,16 +77,18 @@ public class Populate {
 			System.out.println("Starting to read data from "+file);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 			String headers = reader.readLine();
-			if (type.equals("journey")) {
+			if (type.equalsIgnoreCase("journey")) {
 				reader.lines().forEach(line -> saveJourney(line));
-			}
-			if (type.equals("station")) {
+				System.out.println("Finished reading data from "+file);
+			} else if (type.equalsIgnoreCase("station")) {
 				reader.lines().forEach(line -> saveStation(line));
+				System.out.println("Finished reading data from "+file);
+			} else {
+				System.out.println("Don't recognize data type "+type+", please try again");
 			}
-			System.out.println("Finished reading data from "+file);
 			close(reader);
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
+			System.out.println("File not found, please try again");
 			e.printStackTrace();
 		}
 	}
@@ -117,7 +121,7 @@ public class Populate {
 		try {
 			departureTime = LocalDateTime.parse(parts[0]);
 			returnTime = LocalDateTime.parse(parts[1]);
-		}catch (DateTimeParseException ex){
+		} catch (DateTimeParseException ex){
 			System.out.println("Skipped line "+journeyLine);
 			System.out.println("failed to parse date/time "+ex.getMessage());
 			return;
@@ -156,6 +160,7 @@ public class Populate {
 		srepo.saveAndFlush(s);
 	}
 	
+	// Removes quotation marks from station names
 	public String sanitize (String station) {
 		if (station.charAt(0)== '\"' && station.charAt(station.length() - 1) == '\"') {
 			station = station.substring(1, station.length() - 1);
@@ -170,48 +175,92 @@ public class Populate {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	// Asks the user for files to import to the db
+	public void queryFiles() {
+		while (true) {
+			System.out.println("Do you want to import data? (yes/no)");
+			String input =  sc.nextLine();
+			
+			if (input.equalsIgnoreCase("yes")) {
+				System.out.println("What kind of data do you want to import? (station/journey");
+				String type = sc.nextLine();
+				System.out.println("Where is your file? (path to file eg c://bikedata/journeys.csv)");
+				String path = sc.nextLine();
+				try {
+					readFile(path, type);
+				} catch (IOException e) {
+					System.out.println("Failed to read data from file, please try again");
+				}
+			}
+			if (input.equalsIgnoreCase("no")) break;
+		}
+	}
+	
+	// Asks the user if they want to create database table and if so, 
+	// drops the table if it exists and creates it
+	public void queryTable(String tableType) {
+		System.out.println("Do you want to drop/create table "+tableType+" ? (yes/no)");
+		String input = sc.nextLine();
+		if (input.equalsIgnoreCase("yes") && tableType.equalsIgnoreCase("journey")) {
+			Connection con=getConnection();
+	        if (con==null){
+	            System.out.println("Error: Could not connect to database");
+	            return;
+	        }
+	        dropCreate(con, "journey", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
+	        		+ "departure_time varchar(32), "
+	        		+ "return_time varchar(32), "
+	        		+ "departure_station_id int, "
+	        		+ "departure_station varchar(40), "
+	        		+ "return_station_id int, "
+	        		+ "return_station varchar(40), "
+	        		+ "distance double, "
+	        		+ "duration int)");
+	        try{
+	            con.close();
+	        }
+	        catch(SQLException ex){
+	            ex.printStackTrace();
+	        }
+		}
+		if (input.equalsIgnoreCase("yes") && tableType.equalsIgnoreCase("station")) {
+			Connection con=getConnection();
+	        if (con==null){
+	            System.out.println("Error: Could not connect to database");
+	            return;
+	        }
+	        dropCreate(con, "bikestation", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
+	        		+ "station_id int, "
+	        		+ "name_fi varchar(40), "
+	        		+ "name_swe varchar(40), "
+	        		+ "name_eng varchar(40), "
+	        		+ "address_fi varchar(100), "
+	        		+ "address_swe varchar(100), "
+	        		+ "city_fi varchar(20), "
+	        		+ "city_swe varchar(20), "
+	        		+ "operator varchar(32), "
+	        		+ "capacity int, "
+	        		+ "longitude varchar(20), "
+	        		+ "latitude varchar(20))");
+	        try{
+	            con.close();
+	        }
+	        catch(SQLException ex){
+	            ex.printStackTrace();
+	        }
+		}
+		
+	}
 
 	public void init() throws IOException {
 	    decimalFormatSymbols.setDecimalSeparator('.');
 	    df.setDecimalFormatSymbols(decimalFormatSymbols);
 	    
-		Connection con=getConnection();
-        if (con==null){
-            System.out.println("Error: Could not connect to database");
-            return;
-        }
-        dropCreate(con, "journey", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
-        		+ "departure_time varchar(32), "
-        		+ "return_time varchar(32), "
-        		+ "departure_station_id int, "
-        		+ "departure_station varchar(40), "
-        		+ "return_station_id int, "
-        		+ "return_station varchar(40), "
-        		+ "distance double, "
-        		+ "duration int)"); 
-        /*dropCreate(con, "bikestation", "(id int PRIMARY KEY NOT NULL AUTO_INCREMENT, "
-        		+ "station_id int, "
-        		+ "name_fi varchar(40), "
-        		+ "name_swe varchar(40), "
-        		+ "name_eng varchar(40), "
-        		+ "address_fi varchar(100), "
-        		+ "address_swe varchar(100), "
-        		+ "city_fi varchar(20), "
-        		+ "city_swe varchar(20), "
-        		+ "operator varchar(32), "
-        		+ "capacity int, "
-        		+ "longitude varchar(20), "
-        		+ "latitude varchar(20))"); */
-        try{
-            con.close();
-        }
-        catch(SQLException ex){
-            ex.printStackTrace();
-        }
-    
-		readFile("C:\\test.csv", "journey");
-		//readFile("C:\\Helsingin_ja_Espoon_kaupunkipy%C3%B6r%C3%A4asemat_avoin.csv", "station");
-		System.out.println("Ready to roll! All data fetched");
+	    queryTable("station");
+	    queryTable("journey");
+		queryFiles();
+		System.out.println("All right, you're ready to roll!");
 		
 	}
 
