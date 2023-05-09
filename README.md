@@ -1,6 +1,6 @@
 # BikeApp
 
-BikeApp is running [Render.com](https://bikeapp-ftwz.onrender.com). Feel free to visit! 
+BikeApp is running on [Render.com](https://bikeapp-ftwz.onrender.com). Feel free to visit! 
 
 **Disclaimers:**
 
@@ -16,6 +16,7 @@ Bikeapp consists of three parts:
 - Populate: An app to read data from csv files and import it to database (Spring-Boot app)
 - Bikeapp Server: Back-end (Spring-Boot Web server)
 - Bikeapp Client: Front-end (React app)
+- Tests (RobotFramework)
 
 ## Instructions to run the app locally
 
@@ -43,7 +44,7 @@ Bikeapp consists of three parts:
 * Option 2, use the Bikeapp Populate 
   * Have your bike journey and station data files stored somewhere on your machine.
   * Navigate to **bikeapp/populate/src/main/resources** and modify the **application.properties** file to match your database config.
-  * On Command Prompt, cd to bikeapp/populate and run the following command: `mvnw spring-boot:run`
+  * On Command Prompt, cd to bikeapp/populate and run the following command:<br> `mvnw spring-boot:run`
   * The app will query if you want to create database tables for journeys and bikestations. Answer yes if you don't have them already.
   * The app will query what kind of data you want to import. Answer "station" for bike stations and "journey" for bike journeys.
   * The app will query the path to your data file. **NB!** Importing large files takes some time, please bear with me.
@@ -51,7 +52,7 @@ Bikeapp consists of three parts:
 
 #### 3. Run the Actual BikeApp TM
 - Navigate to **bikeapp/server/src/main/resources** and modify the **application.properties** file to match your database config.
-- On Command Prompt, cd to bikeapp/server and run the following command: `mvnw spring-boot:run`
+- On Command Prompt, cd to bikeapp/server and run the following command:<br> `mvnw spring-boot:run`
 - Navigate with your browser to localhost:8081
 - Enjoy the experience
       
@@ -59,7 +60,7 @@ Bikeapp consists of three parts:
 * **MySQL database:** I decided to go with a relation database because there is some relational nature to the data. I also saw a possibility that if the app were to be developed further, the data might get more complex eg. with users, more info on the service providers, links to public transport... However, the data structure at the moment is not very complex so a document database would have been fine too. My other option was to go with a MongoDB database and an Express.js server with mongoose for back-end. 
 * **SpringBoot web app:** I decided to develop the backend with SpringBoot because the JPA repository has nice functionality for pagination & sorting.
 * **React app:** Just plain React, no Redux this time because the app is quite small and I didn't see a need for more complex state handling.
-    * **Bootstrap:** To make the UI easier on the eye I decided to go with the Bootstrap library (instead for eg. MUI) because the UI is quite simple.
+    * **Bootstrap:** To make the UI easier on the eye I decided to go with the Bootstrap library (instead of eg. MUI) because the UI is quite simple.
     * **Leaflet & leaflet-react:** I used Leaflet for the station maps, because it's lightweight with sufficient functionality for this use case
 * **Docker:** to deploy the app to Render
 * **Db4free.net and Render:** For demonstrative purposes I deployed the app to Render with a database on db4free.net. I used these service providers because they are free of charge and no risk for surprise costs. For actual production deployment neither of these options would be viable and I'd suggest a reliable cloud service. Eg. if we were to use AWS one option would be to have AWS RDS for database, S3 Bucket static website hosting for front-end and AWS Elastic Beanstalk / EC2 for back-end.
@@ -74,8 +75,16 @@ Bikeapp consists of three parts:
 * Web UI to search for and sort journeys
 * Web UI to search for stations
 
+## Instructions to run the tests
+### Prerequisites
+* Have BikeApp running locally
+* Python, RobotFramework and Selenium
+* Google Chrome with [Chromedriver](https://chromedriver.chromium.org/downloads)
+### How to run
+* On Command Prompt, cd to **bikeapp/robotframework**. It contains three test files that you can run with the following command:<br>`robot <filename>.robot`
+
 ## Further developmet
-* Automated tests
+* More test coverage
 * Possibility to store new journeys and stations
 * The UI could be prettier
 * Automated fetching of new data
