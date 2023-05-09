@@ -64,6 +64,7 @@ Bikeapp consists of three parts:
     * **Leaflet & leaflet-react:** I used Leaflet for the station maps, because it's lightweight with sufficient functionality for this use case
 * **Docker:** to deploy the app to Render
 * **Db4free.net and Render:** For demonstrative purposes I deployed the app to Render with a database on db4free.net. I used these service providers because they are free of charge and no risk for surprise costs. For actual production deployment neither of these options would be viable and I'd suggest a reliable cloud service. Eg. if we were to use AWS one option would be to have AWS RDS for database, S3 Bucket static website hosting for front-end and AWS Elastic Beanstalk / EC2 for back-end.
+* **RobotFramework w Selenium** For a little bit of E2E testing
 
 ## Features
 * Importing journey and bike station data from csv files to database with data validation
