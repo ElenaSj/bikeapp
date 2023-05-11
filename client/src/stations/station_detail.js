@@ -20,7 +20,6 @@ const StationDetail = ({id}) => {
   return (
     <div>
       {!station.id && <p>Please select a station from the list to view detailed info</p>}
-
       {!!station.id && <div>
         <StationCard station={station} />
         <StationMap position={position} />
